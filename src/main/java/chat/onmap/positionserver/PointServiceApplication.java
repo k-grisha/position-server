@@ -6,10 +6,10 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 
 @SpringBootApplication
 @EnableScheduling
-public class PositionServerApplication {
+public class PointServiceApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(PositionServerApplication.class, args);
+        SpringApplication.run(PointServiceApplication.class, args);
     }
 
 }

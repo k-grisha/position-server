@@ -18,10 +18,10 @@
   </appender>
 
   <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
-    <file>/var/log/position-service/position-service.log</file>
+    <file>/var/log/point-service/point-service.log</file>
     <append>true</append>
     <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-      <fileNamePattern>/var/log/position-service/position-service-%d{yyyyMMdd}.%i.log
+      <fileNamePattern>/var/log/point-service/point-service-%d{yyyyMMdd}.%i.log
       </fileNamePattern>
       <timeBasedFileNamingAndTriggeringPolicy
         class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">

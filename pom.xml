@@ -10,9 +10,9 @@
     <relativePath/> <!-- lookup parent from repository -->
   </parent>
   <groupId>chat.onmap</groupId>
-  <artifactId>position-server</artifactId>
+  <artifactId>point-server</artifactId>
   <version>0.0.1-SNAPSHOT</version>
-  <name>position-server</name>
+  <name>point-server</name>
   <description>Demo project for Spring Boot</description>
 
   <properties>
