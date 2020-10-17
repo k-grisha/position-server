@@ -20,17 +20,17 @@ import java.util.UUID;
 public class PointService {
 
     private final PointRepository pointRepository;
-//    private final UUID berlinerUuid;
+    //    private final UUID berlinerUuid;
     private final int MAX_QUANTITY_OF_POINTS = 100;
     private final int DEFAULT_QUANTITY_OF_POINTS = 100;
 
     public PointService(PointRepository pointRepository) {
         this.pointRepository = pointRepository;
 
-//        berlinerUuid = this.pointRepository.save(Point.builder()
-//                .location(new LatLon(51.536251, 13.436820))
-//                .lastUpdate(LocalDateTime.now())
-//                .build()).getUuid();
+        var berlinerUuid = this.pointRepository.save(Point.builder()
+                .location(new LatLon(51.536251, 13.436820))
+                .lastUpdate(LocalDateTime.now())
+                .build()).getUuid();
 //        this.pointRepository.save(Point.builder()
 //                .location(new LatLon(49, 13.436820))
 //                .lastUpdate(LocalDateTime.now().minusHours(1))
@@ -58,6 +58,21 @@ public class PointService {
                 northEast.getLon(), pageRequest);
     }
 
+    @Transactional
+    public Point savePoint(LatLon latLon) {
+        return pointRepository.save(Point.builder().location(latLon).build());
+    }
+
+    @Transactional
+    public Point updatePoint(UUID uuid, LatLon latLon) {
+        Optional<Point> point = pointRepository.findById(uuid);
+        return point
+                .map(p -> {
+                    p.setLocation(latLon);
+                    return p;
+                })
+                .orElseGet(() -> pointRepository.save(Point.builder().location(latLon).build()));
+    }
 
     private Integer validQuantity(Integer quantity) {
         return quantity == null || quantity < 1 || quantity > MAX_QUANTITY_OF_POINTS ? DEFAULT_QUANTITY_OF_POINTS : quantity;
@@ -68,7 +83,7 @@ public class PointService {
     @Transactional
     public void updateBerliner() {
         final float LON_PER_METER = 0.000015f;
-//        Position berliner= positionRepository.getOne(berlinerUuid);
+//        Point berliner= pointRepository.getOne(berlinerUuid);
 ////        long newLon = berliner.getLon() + LON_PER_METER;
 ////        if (newLon > 179999999) {
 ////            newLon = -179999999;

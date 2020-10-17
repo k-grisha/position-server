@@ -11,13 +11,16 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
@@ -56,7 +59,7 @@ class PositionServerApplicationTests {
 
         assertThat(result)
                 .containsExactly(new PointDto(point.getUuid(),
-                        point.getLocation().getLat().floatValue(), point.getLocation().getLon().floatValue()));
+                        (int) (point.getLocation().getLat() * 1000000), (int) (point.getLocation().getLon() * 1000000)));
     }
 
     @Test
@@ -83,5 +86,48 @@ class PositionServerApplicationTests {
         assertThat(result.get(2).uuid).isEqualTo(point1.getUuid());
     }
 
+    @Test
+    void savePoint_success() throws Exception {
+        var json = mvc.perform(post("/api/v1/point").content("{\"lat\":11,\"lon\":22}").contentType(MediaType.APPLICATION_JSON_VALUE))
+                .andDo(MockMvcResultHandlers.print())
+                .andExpect(status().isOk())
+                .andReturn().getResponse().getContentAsString();
+        var uuid = objectMapper.readValue(json, UUID.class);
+        assertThat(uuid).isNotNull();
+        var point = pointRepository.findById(uuid);
+        assertThat(point).isPresent();
+    }
+
+    @Test
+    void savePoint_validationFail() throws Exception {
+        mvc.perform(post("/api/v1/point").content("{\"lat\":11}").contentType(MediaType.APPLICATION_JSON_VALUE))
+                .andDo(MockMvcResultHandlers.print())
+                .andExpect(status().isBadRequest());
+        mvc.perform(post("/api/v1/point").content("{\"lat\":11,\"lon\":189000000}").contentType(MediaType.APPLICATION_JSON_VALUE))
+                .andDo(MockMvcResultHandlers.print())
+                .andExpect(status().isBadRequest());
+        mvc.perform(post("/api/v1/point").content("{\"lat\":11,\"lon\":-189000000}").contentType(MediaType.APPLICATION_JSON_VALUE))
+                .andDo(MockMvcResultHandlers.print())
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    void updateTest() throws Exception {
+        var point = pointRepository.save(Point.builder()
+                .location(new LatLon(1, 2))
+                .build());
+       mvc.perform(put("/api/v1/point/{uuid}", point.getUuid().toString()).content("{\"lat\": 33000000,\"lon\": " +
+               "44000000}")
+                        .contentType(MediaType.APPLICATION_JSON_VALUE))
+                        .andDo(MockMvcResultHandlers.print())
+                        .andExpect(status().isOk());
+        var pointUpdated = pointRepository.findById(point.getUuid());
+        assertThat(pointUpdated).isPresent();
+        assertThat(pointUpdated.get().getLocation().getLat()).isEqualTo(33);
+        assertThat(pointUpdated.get().getLocation().getLon()).isEqualTo(44);
+
+//        var uuid = objectMapper.readValue(json, UUID.class);
+//        assertThat(uuid).isNotNull();
+    }
 
 }

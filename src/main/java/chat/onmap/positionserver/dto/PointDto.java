@@ -11,6 +11,6 @@ import lombok.EqualsAndHashCode;
 public class PointDto {
 
     public final UUID uuid;
-    public final float lat;
-    public final float lon;
+    public final int lat;
+    public final int lon;
 }

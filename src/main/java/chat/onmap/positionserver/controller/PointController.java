@@ -1,17 +1,17 @@
 package chat.onmap.positionserver.controller;
 
+import chat.onmap.positionserver.dto.LatLonDto;
 import chat.onmap.positionserver.dto.PointDto;
 import chat.onmap.positionserver.mapper.PointMapper;
 import chat.onmap.positionserver.model.LatLon;
 import chat.onmap.positionserver.services.PointService;
 import lombok.extern.slf4j.Slf4j;
 import org.mapstruct.factory.Mappers;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping(path = "/api/v1")
@@ -36,6 +36,16 @@ public class PointController {
         var points = mapper.map(pointService.getPoints(southWest, northEast, num));
         log.info("{} points returned", points.size());
         return points;
+    }
+
+    @PostMapping("/point")
+    public UUID savePoint(@Valid @RequestBody LatLonDto latLon) {
+        return pointService.savePoint(mapper.map(latLon)).getUuid();
+    }
+
+    @PutMapping("/point/{uuid}")
+    public void updatePoint(@PathVariable UUID uuid, @Valid @RequestBody LatLonDto latLon) {
+        pointService.updatePoint(uuid, mapper.map(latLon));
     }
 
 }
