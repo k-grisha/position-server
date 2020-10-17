@@ -1,4 +1,4 @@
-package chat.onmap.positionserver.model;
+package chat.onmap.pointservice.model;
 
 import lombok.Builder;
 import lombok.Data;

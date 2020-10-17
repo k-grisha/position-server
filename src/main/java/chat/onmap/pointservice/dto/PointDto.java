@@ -1,4 +1,4 @@
-package chat.onmap.positionserver.dto;
+package chat.onmap.pointservice.dto;
 
 import java.util.UUID;
 import lombok.AllArgsConstructor;

@@ -1,9 +1,9 @@
-package chat.onmap.positionserver;
+package chat.onmap.pointservice;
 
-import chat.onmap.positionserver.dto.PointDto;
-import chat.onmap.positionserver.model.LatLon;
-import chat.onmap.positionserver.model.Point;
-import chat.onmap.positionserver.repository.PointRepository;
+import chat.onmap.pointservice.dto.PointDto;
+import chat.onmap.pointservice.model.LatLon;
+import chat.onmap.pointservice.model.Point;
+import chat.onmap.pointservice.repository.PointRepository;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
@@ -16,7 +16,6 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;

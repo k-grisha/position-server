@@ -1,6 +1,6 @@
-package chat.onmap.positionserver.repository;
+package chat.onmap.pointservice.repository;
 
-import chat.onmap.positionserver.model.Point;
+import chat.onmap.pointservice.model.Point;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedHashMap;
@@ -11,11 +11,11 @@ import java.util.stream.Collectors;
 
 public class LinkedMapPositionRepository  {
 
-    Map<UUID, Point> positions = Collections.synchronizedMap( new LinkedHashMap<>());
+    Map<UUID, Point> points = Collections.synchronizedMap( new LinkedHashMap<>());
 
 
     public List<Point> findAll() {
-        return new ArrayList<>(positions.values());
+        return new ArrayList<>(points.values());
     }
 
 
@@ -24,11 +24,11 @@ public class LinkedMapPositionRepository  {
 
 
     public List<Point> findLast(int num) {
-        List<UUID> allKeys = new ArrayList<>(positions.keySet());
+        List<UUID> allKeys = new ArrayList<>(points.keySet());
         allKeys = allKeys.subList(allKeys.size() - num, allKeys.size());
         Collections.reverse(allKeys);
         return allKeys.stream()
-            .map(k -> positions.get(k))
+            .map(k -> points.get(k))
             .collect(Collectors.toList());
     }
 }

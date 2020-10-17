@@ -1,8 +1,8 @@
-package chat.onmap.positionserver.services;
+package chat.onmap.pointservice.services;
 
-import chat.onmap.positionserver.model.LatLon;
-import chat.onmap.positionserver.model.Point;
-import chat.onmap.positionserver.repository.PointRepository;
+import chat.onmap.pointservice.model.LatLon;
+import chat.onmap.pointservice.model.Point;
+import chat.onmap.pointservice.repository.PointRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -20,14 +20,14 @@ import java.util.UUID;
 public class PointService {
 
     private final PointRepository pointRepository;
-    //    private final UUID berlinerUuid;
+    private final UUID berlinerUuid;
     private final int MAX_QUANTITY_OF_POINTS = 100;
     private final int DEFAULT_QUANTITY_OF_POINTS = 100;
 
     public PointService(PointRepository pointRepository) {
         this.pointRepository = pointRepository;
 
-        var berlinerUuid = this.pointRepository.save(Point.builder()
+        berlinerUuid = this.pointRepository.save(Point.builder()
                 .location(new LatLon(51.536251, 13.436820))
                 .lastUpdate(LocalDateTime.now())
                 .build()).getUuid();
@@ -82,7 +82,7 @@ public class PointService {
     @Scheduled(fixedRate = 3000)
     @Transactional
     public void updateBerliner() {
-        final float LON_PER_METER = 0.000015f;
+        final double LON_PER_METER = 0.000015;
 //        Point berliner= pointRepository.getOne(berlinerUuid);
 ////        long newLon = berliner.getLon() + LON_PER_METER;
 ////        if (newLon > 179999999) {
@@ -91,14 +91,14 @@ public class PointService {
 //        berliner.setLon(new Random().nextInt());
 //        positionRepository.save(berliner);
 
-//        Optional<Point> berliner = pointRepository.findById(berlinerUuid);
-//        berliner.ifPresent(p -> {
-//            double newLon = p.getLocation().getLon() + (LON_PER_METER * 10);
-//            if (newLon > 179.999999f) {
-//                newLon = -179.999999f;
-//            }
-//            p.getLocation().setLon(newLon);
-//        });
+        Optional<Point> berliner = pointRepository.findById(berlinerUuid);
+        berliner.ifPresent(p -> {
+            double newLon = p.getLocation().getLon() + (LON_PER_METER * 10);
+            if (newLon > 179.999999) {
+                newLon = -179.999999;
+            }
+            p.getLocation().setLon(newLon);
+        });
 
     }
 

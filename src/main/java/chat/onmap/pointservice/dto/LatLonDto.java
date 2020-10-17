@@ -1,4 +1,4 @@
-package chat.onmap.positionserver.dto;
+package chat.onmap.pointservice.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

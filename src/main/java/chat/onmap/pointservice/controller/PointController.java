@@ -1,10 +1,10 @@
-package chat.onmap.positionserver.controller;
+package chat.onmap.pointservice.controller;
 
-import chat.onmap.positionserver.dto.LatLonDto;
-import chat.onmap.positionserver.dto.PointDto;
-import chat.onmap.positionserver.mapper.PointMapper;
-import chat.onmap.positionserver.model.LatLon;
-import chat.onmap.positionserver.services.PointService;
+import chat.onmap.pointservice.dto.LatLonDto;
+import chat.onmap.pointservice.dto.PointDto;
+import chat.onmap.pointservice.mapper.PointMapper;
+import chat.onmap.pointservice.model.LatLon;
+import chat.onmap.pointservice.services.PointService;
 import lombok.extern.slf4j.Slf4j;
 import org.mapstruct.factory.Mappers;
 import org.springframework.web.bind.annotation.*;

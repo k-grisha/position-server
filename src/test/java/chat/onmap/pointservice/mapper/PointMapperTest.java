@@ -1,17 +1,15 @@
-package chat.onmap.positionserver.mapper;
+package chat.onmap.pointservice.mapper;
 
-import chat.onmap.positionserver.dto.LatLonDto;
-import chat.onmap.positionserver.dto.PointDto;
-import chat.onmap.positionserver.model.LatLon;
-import chat.onmap.positionserver.model.Point;
-import org.hamcrest.Matchers;
+import chat.onmap.pointservice.dto.LatLonDto;
+import chat.onmap.pointservice.dto.PointDto;
+import chat.onmap.pointservice.model.LatLon;
+import chat.onmap.pointservice.model.Point;
 import org.junit.jupiter.api.Test;
 import org.mapstruct.factory.Mappers;
 
 import static net.bytebuddy.matcher.ElementMatchers.is;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.withPrecision;
-import static org.hamcrest.number.IsCloseTo.closeTo;
 
 class PointMapperTest {
 

@@ -1,7 +1,7 @@
-package chat.onmap.positionserver.repository;
+package chat.onmap.pointservice.repository;
 
-import chat.onmap.positionserver.model.LatLon;
-import chat.onmap.positionserver.model.Point;
+import chat.onmap.pointservice.model.LatLon;
+import chat.onmap.pointservice.model.Point;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

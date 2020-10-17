@@ -1,9 +1,9 @@
-package chat.onmap.positionserver.mapper;
+package chat.onmap.pointservice.mapper;
 
-import chat.onmap.positionserver.dto.LatLonDto;
-import chat.onmap.positionserver.dto.PointDto;
-import chat.onmap.positionserver.model.LatLon;
-import chat.onmap.positionserver.model.Point;
+import chat.onmap.pointservice.dto.LatLonDto;
+import chat.onmap.pointservice.dto.PointDto;
+import chat.onmap.pointservice.model.LatLon;
+import chat.onmap.pointservice.model.Point;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Mappings;

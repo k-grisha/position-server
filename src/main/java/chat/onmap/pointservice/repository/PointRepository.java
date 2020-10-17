@@ -1,6 +1,6 @@
-package chat.onmap.positionserver.repository;
+package chat.onmap.pointservice.repository;
 
-import chat.onmap.positionserver.model.Point;
+import chat.onmap.pointservice.model.Point;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
