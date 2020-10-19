@@ -28,25 +28,26 @@ public class PointService {
         this.pointRepository = pointRepository;
 
         berlinerUuid = this.pointRepository.save(Point.builder()
-                .location(new LatLon(51.536251, 13.436820))
-                .lastUpdate(LocalDateTime.now())
+                .name("Berliner")
+                .location(new LatLon(52.536229, 13.436820))
                 .build()).getUuid();
-//        this.pointRepository.save(Point.builder()
-//                .location(new LatLon(49, 13.436820))
-//                .lastUpdate(LocalDateTime.now().minusHours(1))
-//                .build());
-//        this.pointRepository.save(Point.builder()
-//                .location(new LatLon(48, 13.436820))
-//                .lastUpdate(LocalDateTime.now().minusHours(2))
-//                .build());
-//        this.pointRepository.save(Point.builder()
-//                .location(new LatLon(46, 13.436820))
-//                .lastUpdate(LocalDateTime.now().minusHours(4))
-//                .build());
-//        this.pointRepository.save(Point.builder()
-//                .location(new LatLon(47, 13.436820))
-//                .lastUpdate(LocalDateTime.now().minusHours(3))
-//                .build());
+        this.pointRepository.save(Point.builder()
+                .name("Ivan")
+                .location(new LatLon(52.535324, 13.438687))
+                .build());
+        this.pointRepository.save(Point.builder()
+                .name("Stepan")
+                .location(new LatLon(52.514863, 13.434657))
+                .build());
+        this.pointRepository.save(Point.builder()
+                .name("Debil")
+                .location(new LatLon(52.219534, 13.413757))
+                .build());
+        this.pointRepository.save(Point.builder()
+                .name("Uragan")
+                .location(new LatLon(57.195511, 13.348374))
+                .build());
+
     }
 
     public List<Point> getPoints(final LatLon southWest, final LatLon northEast, final Integer quantity) {

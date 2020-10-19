@@ -13,4 +13,5 @@ public class PointDto {
     public final UUID uuid;
     public final int lat;
     public final int lon;
+    public final String name;
 }

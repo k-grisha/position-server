@@ -58,11 +58,12 @@ class PositionServerApplicationTests {
 
         assertThat(result)
                 .containsExactly(new PointDto(point.getUuid(),
-                        (int) (point.getLocation().getLat() * 1000000), (int) (point.getLocation().getLon() * 1000000)));
+                        (int) (point.getLocation().getLat() * 1000000),
+                        (int) (point.getLocation().getLon() * 1000000), point.getName()));
     }
 
     @Test
-    void getAllPointsOrder() throws Exception {
+    void getPointsOrdered() throws Exception {
         var point1 = pointRepository.save(Point.builder()
                 .location(new LatLon(1, 2))
                 .build());
@@ -72,17 +73,16 @@ class PositionServerApplicationTests {
         var point3 = pointRepository.save(Point.builder()
                 .location(new LatLon(1, 2))
                 .build());
-        var json = mvc.perform(get("/api/v1/point"))
+        var json = mvc.perform(get("/api/v1/point").param("num","2"))
                 .andDo(MockMvcResultHandlers.print())
                 .andExpect(status().isOk())
                 .andReturn().getResponse().getContentAsString();
         var result = objectMapper.readValue(json, new TypeReference<List<PointDto>>() {
         });
 
-        assertThat(result.size()).isEqualTo(3);
+        assertThat(result.size()).isEqualTo(2);
         assertThat(result.get(0).uuid).isEqualTo(point3.getUuid());
         assertThat(result.get(1).uuid).isEqualTo(point2.getUuid());
-        assertThat(result.get(2).uuid).isEqualTo(point1.getUuid());
     }
 
     @Test
@@ -115,11 +115,11 @@ class PositionServerApplicationTests {
         var point = pointRepository.save(Point.builder()
                 .location(new LatLon(1, 2))
                 .build());
-       mvc.perform(put("/api/v1/point/{uuid}", point.getUuid().toString()).content("{\"lat\": 33000000,\"lon\": " +
-               "44000000}")
-                        .contentType(MediaType.APPLICATION_JSON_VALUE))
-                        .andDo(MockMvcResultHandlers.print())
-                        .andExpect(status().isOk());
+        mvc.perform(put("/api/v1/point/{uuid}", point.getUuid().toString()).content("{\"lat\": 33000000,\"lon\": " +
+                "44000000}")
+                .contentType(MediaType.APPLICATION_JSON_VALUE))
+                .andDo(MockMvcResultHandlers.print())
+                .andExpect(status().isOk());
         var pointUpdated = pointRepository.findById(point.getUuid());
         assertThat(pointUpdated).isPresent();
         assertThat(pointUpdated.get().getLocation().getLat()).isEqualTo(33);

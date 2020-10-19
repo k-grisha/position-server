@@ -22,6 +22,7 @@ public class Point {
     private UUID uuid;
     private LatLon location;
     private LocalDateTime lastUpdate;
+    private String name;
 
 
     @PrePersist
