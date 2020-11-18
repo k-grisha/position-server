@@ -38,12 +38,7 @@ public class PointController {
         return points;
     }
 
-    @PostMapping("/point")
-    public UUID savePoint(@Valid @RequestBody LatLonDto latLon) {
-        return pointService.savePoint(mapper.map(latLon)).getUuid();
-    }
-
-    @PutMapping("/point/{uuid}")
+    @PostMapping("/point/{uuid}")
     public void updatePoint(@PathVariable UUID uuid, @Valid @RequestBody LatLonDto latLon) {
         pointService.updatePoint(uuid, mapper.map(latLon));
     }

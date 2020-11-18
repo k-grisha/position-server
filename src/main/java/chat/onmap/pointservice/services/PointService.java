@@ -10,7 +10,6 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -28,23 +27,23 @@ public class PointService {
         this.pointRepository = pointRepository;
 
         berlinerUuid = this.pointRepository.save(Point.builder()
-                .name("Berliner")
+                .uuid(UUID.randomUUID())
                 .location(new LatLon(52.536229, 13.436820))
                 .build()).getUuid();
         this.pointRepository.save(Point.builder()
-                .name("Ivan")
+                .uuid(UUID.randomUUID())
                 .location(new LatLon(52.535324, 13.438687))
                 .build());
         this.pointRepository.save(Point.builder()
-                .name("Stepan")
+                .uuid(UUID.randomUUID())
                 .location(new LatLon(52.514863, 13.434657))
                 .build());
         this.pointRepository.save(Point.builder()
-                .name("Debil")
+                .uuid(UUID.randomUUID())
                 .location(new LatLon(52.219534, 13.413757))
                 .build());
         this.pointRepository.save(Point.builder()
-                .name("Uragan")
+                .uuid(UUID.randomUUID())
                 .location(new LatLon(57.195511, 13.348374))
                 .build());
 
@@ -60,11 +59,6 @@ public class PointService {
     }
 
     @Transactional
-    public Point savePoint(LatLon latLon) {
-        return pointRepository.save(Point.builder().location(latLon).build());
-    }
-
-    @Transactional
     public Point updatePoint(UUID uuid, LatLon latLon) {
         Optional<Point> point = pointRepository.findById(uuid);
         return point
@@ -72,7 +66,7 @@ public class PointService {
                     p.setLocation(latLon);
                     return p;
                 })
-                .orElseGet(() -> pointRepository.save(Point.builder().location(latLon).build()));
+                .orElseGet(() -> pointRepository.save(Point.builder().uuid(uuid).location(latLon).build()));
     }
 
     private Integer validQuantity(Integer quantity) {

@@ -5,7 +5,11 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -18,11 +22,10 @@ import java.util.UUID;
 public class Point {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @NotNull
     private UUID uuid;
     private LatLon location;
     private LocalDateTime lastUpdate;
-    private String name;
 
 
     @PrePersist

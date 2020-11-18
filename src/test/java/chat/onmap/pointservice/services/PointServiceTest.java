@@ -10,6 +10,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -28,14 +29,14 @@ class PointServiceTest {
         pointRepository.deleteAll();
         points = Arrays.asList(
                 // Berliners
-                Point.builder().location(new LatLon(52.530443, 13.408755)).build(),
-                Point.builder().location(new LatLon(52.530643, 13.408855)).build(),
-                Point.builder().location(new LatLon(52.530743, 13.408955)).build(),
+                Point.builder().location(new LatLon(52.530443, 13.408755)).uuid(UUID.randomUUID()).build(),
+                Point.builder().location(new LatLon(52.530643, 13.408855)).uuid(UUID.randomUUID()).build(),
+                Point.builder().location(new LatLon(52.530743, 13.408955)).uuid(UUID.randomUUID()).build(),
                 // Other
-                Point.builder().location(new LatLon(52.149851, 12.403229)).build(),
-                Point.builder().location(new LatLon(53.194280, 11.998717)).build(),
-                Point.builder().location(new LatLon(52.904201, 13.931979)).build(),
-                Point.builder().location(new LatLon(52.059942, 14.391751)).build());
+                Point.builder().location(new LatLon(52.149851, 12.403229)).uuid(UUID.randomUUID()).build(),
+                Point.builder().location(new LatLon(53.194280, 11.998717)).uuid(UUID.randomUUID()).build(),
+                Point.builder().location(new LatLon(52.904201, 13.931979)).uuid(UUID.randomUUID()).build(),
+                Point.builder().location(new LatLon(52.059942, 14.391751)).uuid(UUID.randomUUID()).build());
         pointRepository.saveAll(points);
     }
 
