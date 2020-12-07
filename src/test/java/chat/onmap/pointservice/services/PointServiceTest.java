@@ -7,6 +7,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.util.ReflectionTestUtils;
 
 import java.util.Arrays;
 import java.util.List;
@@ -61,6 +62,14 @@ class PointServiceTest {
         assertThat(response.size()).isEqualTo(3);
         response = pointService.getPoints(southWest, northEast, 2);
         assertThat(response.size()).isEqualTo(2);
+    }
+
+    @Test
+    public void deleteOutdatedTest(){
+        ReflectionTestUtils.setField(pointService, "outdatedThreshold", 0);
+        pointService.deleteOutdated();
+        var points = pointService.getPoints(null, null, null);
+        assertThat(points).isEmpty();
     }
 
 }
