@@ -5,6 +5,14 @@ server:
 ---
 
 spring:
+  application:
+    name: "point-service"
+  boot:
+    admin:
+      client:
+        instance:
+          prefer-ip: true
+        url: http://192.168.31.154:8100
   datasource:
     url: jdbc:h2:mem:testdb
     driverClassName: org.h2.Driver
@@ -12,12 +20,27 @@ spring:
     password:
   jpa:
     database-platform: org.hibernate.dialect.H2Dialect
-    show-sql: true
+    show-sql: false
   h2:
     console:
       settings:
         web-allow-others: true
       enabled: true
+
+logging:
+  pattern:
+    file: "%clr(%d{yyyy-MM-dd HH:mm:ss.SSS}){faint} %clr(%5p) %clr(${PID}){magenta} %clr(---){faint} %clr([%15.15t]){faint} %clr(%-40.40logger{39}){cyan} %clr(:){faint} %m%n%wEx"
+  level:
+    root: INFO
+  file:
+    name: "/var/log/point-service/point-service.log"
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+
 
 #hibernate:
 #  show_sql: true
