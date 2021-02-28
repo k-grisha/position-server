@@ -34,7 +34,7 @@ public class PointController {
         var southWest = swLat == null || swLon == null ? null : new LatLon(swLat, swLon);
         var northEast = neLat == null || neLon == null ? null : new LatLon(neLat, neLon);
         var points = mapper.map(pointService.getPoints(southWest, northEast, num));
-        log.info("{} points returned", points.size());
+        log.debug("{} points returned", points.size());
         return points;
     }
 

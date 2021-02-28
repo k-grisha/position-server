@@ -31,26 +31,9 @@ public class PointService {
         this.pointRepository = pointRepository;
 
         berlinerUuid = this.pointRepository.save(Point.builder()
-                .uuid(UUID.randomUUID())
+                .uuid(UUID.fromString("0227185e-1812-473c-8985-a5211dddd048"))
                 .location(new LatLon(52.536229, 13.436820))
                 .build()).getUuid();
-//        this.pointRepository.save(Point.builder()
-//                .uuid(UUID.randomUUID())
-//                .location(new LatLon(52.535324, 13.438687))
-//                .build());
-//        this.pointRepository.save(Point.builder()
-//                .uuid(UUID.randomUUID())
-//                .location(new LatLon(52.514863, 13.434657))
-//                .build());
-//        this.pointRepository.save(Point.builder()
-//                .uuid(UUID.randomUUID())
-//                .location(new LatLon(52.219534, 13.413757))
-//                .build());
-//        this.pointRepository.save(Point.builder()
-//                .uuid(UUID.randomUUID())
-//                .location(new LatLon(57.195511, 13.348374))
-//                .build());
-
     }
 
     public List<Point> getPoints(final LatLon southWest, final LatLon northEast, final Integer quantity) {
@@ -80,7 +63,7 @@ public class PointService {
 
     @Scheduled(fixedRate = 5000)
     @Transactional
-    public void deleteOutdated(){
+    public void deleteOutdated() {
         pointRepository.deleteAllByLastUpdateBefore(LocalDateTime.now().minusSeconds(outdatedThreshold));
     }
 
